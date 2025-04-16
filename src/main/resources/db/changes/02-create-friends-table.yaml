@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 02-create-friends-table
+      author: spliteasy
+      changes:
+        - createTable:
+            tableName: friends
+            remarks: "Таблиця для зберігання зв’язків між друзями"
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: "Унікальний ідентифікатор зв’язку"
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_friends_user_id
+                    references: users(id)
+                  remarks: "ID користувача, який додає друга"
+              - column:
+                  name: friend_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_friends_friend_id
+                    references: users(id)
+                  remarks: "ID друга"
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+                  remarks: "Дата створення зв’язку"
+        - addUniqueConstraint:
+            tableName: friends
+            columnNames: user_id, friend_id
+            constraintName: uk_friends_user_friend
+            remarks: "Забезпечує унікальність зв’язку між користувачем і другом"

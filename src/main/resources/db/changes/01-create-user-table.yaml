@@ -1,0 +1,63 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-create-user-table
+      author: spliteasy
+      changes:
+        - createTable:
+            tableName: users
+            remarks: "Таблиця для зберігання даних користувачів. Зв’язок із друзями зберігається в таблиці friends через user_id."
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: "Унікальний ідентифікатор користувача"
+              - column:
+                  name: chat_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+                  remarks: "Chat ID користувача з Telegram"
+              - column:
+                  name: unique_id
+                  type: varchar(10)
+                  constraints:
+                    nullable: false
+                    unique: true
+                  remarks: "Автоматично згенерований унікальний ID (10 цифр)"
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: true
+                  remarks: "Ім'я користувача"
+              - column:
+                  name: payment_method
+                  type: varchar(50)
+                  constraints:
+                    nullable: true
+                  remarks: "Спосіб оплати (CASH/CARD)"
+              - column:
+                  name: card_number
+                  type: varchar(100)
+                  constraints:
+                    nullable: true
+                  remarks: "Номер картки (зашифрований, якщо потрібно)"
+              - column:
+                  name: role
+                  type: varchar(50)
+                  defaultValue: "USER"
+                  constraints:
+                    nullable: false
+                  remarks: "Роль користувача (ADMIN/USER)"
+              - column:
+                  name: status
+                  type: varchar(50)
+                  defaultValue: "PENDING"
+                  constraints:
+                    nullable: false
+                  remarks: "Статус користувача (PENDING/APPROVED/REJECTED/BLOCKED)"
