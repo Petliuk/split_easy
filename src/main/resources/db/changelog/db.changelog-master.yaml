@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: /db/changes/01-create-user-table.yaml
+  - include:
+      file: /db/changes/02-create-friends-table.yaml
