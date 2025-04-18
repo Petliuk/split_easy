@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class HandlerConfig {
-    private final CommandHandler commandHandler;
+    private final TextMessageHandler textMessageHandler;
     private final CallbackQueryHandler callbackQueryHandler;
 
     @Bean
     public UpdateHandler updateHandler() {
-        commandHandler.setNextHandler(callbackQueryHandler);
-        return commandHandler;
+        textMessageHandler.setNextHandler(callbackQueryHandler);
+        return textMessageHandler;
     }
 }

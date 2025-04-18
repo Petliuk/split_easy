@@ -12,11 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -40,13 +36,10 @@ public class StartCommand implements Command{
         String userName = update.getMessage().getChat().getFirstName();
         log.info("Processing /start command for chatId: {}", chatId);
 
-        bot.updateCommandMenuForUser(chatId);
-
         User user = userService.registerUser(chatId, userName);
 
         if (user.getRole() == Role.ADMIN) {
-            messageSender.sendMessage(bot, chatId, "Вітаємо, адміне! Ви можете використовувати всі команди.\n" +
-                    "Для перегляду користувачів введіть /users");
+            messageSender.sendMessage(bot, chatId, "Вітаємо, адміне! Ви можете використовувати всі доступні команди.");
         } else if (user.getStatus() == Status.APPROVED) {
             if (user.getPaymentMethod() == null) {
                 sendPaymentMethodOptions(bot, chatId);
@@ -62,7 +55,6 @@ public class StartCommand implements Command{
     }
 
     private void sendPaymentMethodOptions(SplitExpensesBot bot, String chatId) throws TelegramApiException {
-        // Використовуємо KeyboardUtils для створення клавіатури
         messageSender.sendMessage(bot, chatId, "Оберіть спосіб отримання грошей:", keyboardUtils.createPaymentMethodKeyboard());
     }
 }

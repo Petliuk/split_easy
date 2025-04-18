@@ -17,6 +17,7 @@ public class CommandFactory {
     private final UsersCommand usersCommand;
     private final AddFriendCommand addFriendCommand;
     private final ViewFriendsCommand viewFriendsCommand;
+    private final CommandsCommand commandsCommand;
 
     private final Map<String, Command> commandMap = new HashMap<>();
 
@@ -25,10 +26,11 @@ public class CommandFactory {
         commandMap.put("/start", startCommand);
         commandMap.put("/pending", pendingCommand);
         commandMap.put("/approve", approveCommand);
-        commandMap.put("/help", helpCommand);
         commandMap.put("/users", usersCommand);
         commandMap.put("/add_friend", addFriendCommand);
         commandMap.put("/view_friends", viewFriendsCommand);
+        commandMap.put("/command", commandsCommand);
+        commandMap.put("/help", helpCommand);
     }
 
     public Command getCommand(String commandText) {
